@@ -6,10 +6,14 @@ import { Signin } from './src/screens/Signin';
 import { Loading } from './src/components/Loading';
 import { StatusBar } from 'react-native';
 
+import { ANDROID_CLIENT_ID } from '@env';
+
 export default function App() {
 
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold});
 
+  console.log( ANDROID_CLIENT_ID);
+  
   if (!fontsLoaded) {
     return (
       <Loading/>
