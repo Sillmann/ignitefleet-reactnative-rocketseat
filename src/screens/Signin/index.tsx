@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Alert } from 'react-native';
 import { Container, Title, Slogan } from './styles';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
@@ -19,6 +20,29 @@ export function Signin() {
 
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+  async function handleGoogleSignIn() {
+    try {
+      setIsAuthenticating(true);
+      // const response = await GoogleSignin.signIn();
+      // console.log(response);
+
+      const { idToken } = await GoogleSignin();
+
+      if (idToken) {
+
+      } else {
+        Alert.alert("Entrar","Não foi possível conectar-se a sua conta google.")
+        setIsAuthenticating(false);
+      }
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Entrar","Não foi possível conectar-se a sua conta google.")
+      setIsAuthenticating(false);
+    }
+
+  }
+
   return (
     <Container source={backgroundImg}>
       
@@ -27,10 +51,14 @@ export function Signin() {
       </Title>
 
       <Slogan>
-        Gestão de veículos
+        Gestão de veículosss
       </Slogan>
 
-      <Button title="Entrar com Google" isLoading={isAuthenticating}/>
+      <Button 
+        title="Entrar com Google" 
+        isLoading={isAuthenticating}
+        onPress={handleGoogleSignIn}
+      />
 
     </Container>
 

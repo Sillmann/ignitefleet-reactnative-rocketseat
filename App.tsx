@@ -1,12 +1,15 @@
 import { ThemeProvider } from 'styled-components/native'
+import { StatusBar } from 'react-native';
+import { AppProvider, UserProvider } from '@realm/react';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 
 import theme from './src/theme';
-import { Signin } from './src/screens/Signin';
-import { Loading } from './src/components/Loading';
-import { StatusBar } from 'react-native';
 
-import { ANDROID_CLIENT_ID } from '@env';
+import { ANDROID_CLIENT_ID, REALM_APP_ID } from '@env';
+
+import { Signin } from './src/screens/Signin';
+import { Home } from './src/screens/Home';
+import { Loading } from './src/components/Loading';
 
 export default function App() {
 
@@ -20,16 +23,25 @@ export default function App() {
     )
   }
   return (
-    <ThemeProvider theme={theme}>
-      
-      <StatusBar 
-        barStyle="light-content" 
-        backgroundColor="transparent" 
-        translucent
-      />
 
-      <Signin />
+    <AppProvider id={REALM_APP_ID}>
 
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        
+        <StatusBar 
+          barStyle="light-content" 
+          backgroundColor="transparent" 
+          translucent
+        />
+
+        {/* <Signin /> */}
+
+        <UserProvider fallback={Signin}>
+          <Home />
+        </UserProvider>
+
+      </ThemeProvider>
+
+    </AppProvider>
   );
 }
